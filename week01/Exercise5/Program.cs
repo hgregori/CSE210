@@ -4,46 +4,45 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello World! This is the Exercise5 Project.");
+DisplayWelcomeMessage();
 
-        static void DisplayWelcome()
-        {
-            Console.WriteLine("Welcome to the Program.");
-        }
-        
-        static void PromptUserName(string name)
-        {
-            Console.WriteLine($"Your name is {name}.");
-        }
-    
-        static void PromptUserNumber(int num)
-        {
-            Console.WriteLine($"Your favorite number is {num}.");
-        }
+        string userName = PromptUserName();
+        int userNumber = PromptUserNumber();
 
-        static int SquareNumber(int num)
-        {
-            int squared = num * num;
-            return squared;
-        }
+        int squaredNumber = SquareNumber(userNumber);
 
-        static void DisplayResult(string name, int num)
-        {
-            Console.WriteLine($"Name: {name} | Squared num: {num}");
-        }
+        DisplayResult(userName, squaredNumber);
+    }
 
+    static void DisplayWelcomeMessage()
+    {
+        Console.WriteLine("Welcome to the program!");
+    }
+
+    static string PromptUserName()
+    {
         Console.Write("Please enter your name: ");
         string name = Console.ReadLine();
 
-        Console.Write("Please enter your name: ");
-        string favNum = Console.ReadLine();
-        int num = int.Parse(favNum);
+        return name;
+    }
 
-        DisplayWelcome();
-        PromptUserName(name);
-        PromptUserNumber(num);
-        int squared = SquareNumber(num);
-        DisplayResult(name, squared);
+    static int PromptUserNumber()
+    {
+        Console.Write("Please enter your favorite number: ");
+        int number = int.Parse(Console.ReadLine());
 
+        return number;
+    }
+
+    static int SquareNumber(int number)
+    {
+        int square = number * number;
+        return square;
+    }
+
+    static void DisplayResult(string name, int square)
+    {
+        Console.WriteLine($"{name}, the square of your number is {square}");
     }
 }

@@ -8,9 +8,7 @@ class Program
         string answer = "yes";
 
         do {
-            Console.Write("What is the magic number? ");
-            string magicNumber = Console.ReadLine();
-            int number = int.Parse(magicNumber);
+            int number = Random.Shared.Next(1, 100);
 
             Console.Write("What is your guess? ");
                 string guess = Console.ReadLine();

@@ -14,12 +14,14 @@ class Program
             Console.Write("Write a number(0 to stop): ");
             string num = Console.ReadLine();
             numb = int.Parse(num);
-
-            numbers.Add(numb);
+            if (numb != 0)
+            {
+                numbers.Add(numb);
+            }
         } while (numb != 0);
 
         int total = 0;
-        int max = 0;
+        int max = numbers[0];
 
         foreach (int number in numbers)
         {
