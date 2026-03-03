@@ -1,63 +1,85 @@
 using System;
 
-class Program
+namespace ResumeApp
 {
-    static void Main(string[] args)
+    class Program
     {
-        Job job1 = new Job();
-        job1._jobTitle = "Software Engineer";
-        job1._company = "Microsoft";
-        job1._startYear = 2019;
-        job1._endYear = 2022;
-
-        Job job2 = new Job();
-        job2._jobTitle = "Manager";
-        job2._company = "Apple";
-        job2._startYear = 2022;
-        job2._endYear = 2023;
-
-        Resume myResume = new Resume();
-        myResume._name = "Allison Rose";
-
-        myResume._jobs.Add(job1);
-        myResume._jobs.Add(job2);
-
-        myResume.Display();
-    }
-}
-
-public class Job
-{
-    public string _company;
-    public  string _jobTitle;
-    public int _startYear;
-    public int _endYear;
-
-    public void JobInformation()
-    {
-        string job = $"{_jobTitle} ({_company}) {_startYear}-{_endYear}";
-        Console.WriteLine(job);
-
-        myResume1.Display();
-    }
-}
-
-public class Resume
-{
-    public string _name;
-    public List<Job> _jobs = new List<Job>();
-
-      public void Display()
-    {
-        Console.WriteLine($"Name: {_name}");
-        Console.WriteLine("Jobs:");
-
-        // Notice the use of the custom data type "Job" in this loop
-        foreach (Job job in _jobs)
+        static void Main(string[] args)
         {
-            // This calls the Display method on each job
-            job.Display();
+            // Main orchestrates the flow ONLY (no direct Console.ReadLine here).
+            string name = PromptUserName();
+
+            Console.WriteLine("Welcome to the Resume App.");
+
+            Job job1 = new Job
+            {
+                _jobTitle = PromptUserString("Title of role 1: "),
+                _company = PromptUserString("Company name 1: "),
+                _startYear = PromptUserNumber("Start year 1: "),
+                _endYear = PromptUserNumber("End year 1: ")
+            };
+
+            Job job2 = new Job
+            {
+                _jobTitle = PromptUserString("Title of role 2: "),
+                _company = PromptUserString("Company name 2: "),
+                _startYear = PromptUserNumber("Start year 2: "),
+                _endYear = PromptUserNumber("End year 2: ")
+            };
+
+            Resume myResume = new Resume
+            {
+                _name = name
+            };
+
+            myResume._jobs.Add(job1);
+            myResume._jobs.Add(job2);
+
+            Console.WriteLine();
+            myResume.Display();
+        }
+
+        // === Required by the assignment ===
+        // Asks for and RETURNS the user's name (string).
+        public static string PromptUserName()
+        {
+            Console.Write("Enter your name: ");
+            string name = Console.ReadLine();
+            // Optional: basic guard
+            while (string.IsNullOrWhiteSpace(name))
+            {
+                Console.Write("Invalid name. Enter your name: ");
+                name = Console.ReadLine();
+            }
+            return name.Trim();
+        }
+
+        // Asks for and RETURNS a number (int).
+        public static int PromptUserNumber(string prompt)
+        {
+            Console.Write(prompt);
+            while (true)
+            {
+                string input = Console.ReadLine();
+                if (int.TryParse(input, out int value))
+                {
+                    return value;
+                }
+                Console.Write("Invalid value. " + prompt);
+            }
+        }
+
+        // (Optional helper) Asks for and RETURNS a string with a prompt.
+        public static string PromptUserString(string prompt)
+        {
+            Console.Write(prompt);
+            string value = Console.ReadLine();
+            while (string.IsNullOrWhiteSpace(value))
+            {
+                Console.Write("Empty input. " + prompt);
+                value = Console.ReadLine();
+            }
+            return value.Trim();
         }
     }
-
 }
