@@ -65,12 +65,8 @@ class Loading
             // Normalize line endings
             all = all.Replace("\r\n", "\n").Replace("\r", "\n");
 
-            // Split by a line that is exactly '|'
-            // We can split on "\n|\n" to ensure it's a standalone separator line.
-            // Also trim leading/trailing newlines for cleaner splits.
             all = all.Trim('\n');
 
-            // Handle empty file gracefully
             if (string.IsNullOrEmpty(all))
                 return loaded;
 
@@ -78,7 +74,6 @@ class Loading
 
             foreach (var part in parts)
             {
-                // Rebuild using the same text; keep as-is
                 loaded.Add(part);
             }
 
