@@ -51,59 +51,43 @@ class Program
                     Console.WriteLine("\n");
                 }
                 break;
+             
                 case 3:
-                    
-                Console.Write("\nEnter a filename to save (e.g., journal.txt): ");
-                string? filename = Console.ReadLine();
+                    Console.Write("\nEnter a TXT file name to save (e.g., journal.txt or just 'journal'): ");
+                    string fileName = Console.ReadLine()?.Trim();
 
-                if (string.IsNullOrWhiteSpace(filename))
-                {
-                    Console.WriteLine("Invalid filename.");
-                    break;
-                }
-                var responseList = Responses.GetResponses();
-                try
-                {
-                    System.IO.File.WriteAllLines(filename, responseList);
-                    Console.WriteLine($"Saved {responseList.Count} entries to '{filename}'.");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error saving file: {ex.Message}");
-                }
-                break;
-
-                case 4:    
-                Console.Write("\nEnter a filename to load (e.g., journal.txt): ");
-                string? filename = Console.ReadLine();
-
-                if (string.IsNullOrWhiteSpace(filename))
-                {
-                    Console.WriteLine("Invalid filename.");
-                    break;
-                }
-
-                if (!System.IO.File.Exists(filename))
-                {
-                    Console.WriteLine("File not found.");
-                    break;
-                }
-
-                try
-                {
-                    var lines = System.IO.File.ReadAllLines(filename);
-                    // If your Responses class only has Add via constructor:
-                    foreach (var line in lines)
+                    if (string.IsNullOrWhiteSpace(fileName))
                     {
-                        new Responses(line);
+                        fileName = "journal.txt"; // default
                     }
-                    Console.WriteLine($"Loaded {lines.Length} entries from '{filename}'.");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error loading file: {ex.Message}");
-                }
-                break;
+                    else if (string.IsNullOrWhiteSpace(Path.GetExtension(fileName)))
+                    {
+                        fileName = Path.ChangeExtension(fileName, ".txt");
+                    }
+
+                    var entries = Responses.GetResponses();
+                    Saving.SaveTxtWithPipeSeparator(fileName, entries);
+                    break;
+
+                case 4:
+
+                    Console.Write("\nEnter a TXT file name to load (e.g., journal.txt): ");
+                    fileName = Console.ReadLine()?.Trim();
+
+                    if (string.IsNullOrWhiteSpace(fileName))
+                    {
+                        Console.WriteLine("\n⚠️ File name cannot be empty.");
+                        break;
+                    }
+                    if (string.IsNullOrWhiteSpace(Path.GetExtension(fileName)))
+                    {
+                        fileName = Path.ChangeExtension(fileName, ".txt");
+                    }
+
+                    var loaded = Loading.LoadTxtWithPipeSeparator(fileName);
+                    Responses.LoadResponses(loaded);
+                    break;
+
                 case 5:
                     Console.Write("Are you sure you want to quit? (y/n): ");
                     string confirm = Console.ReadLine().ToLower();
@@ -121,26 +105,6 @@ class Program
             }
         }
         while (answer != 5);
-        // Display the journal entry with the prompt, response, and date on the console
-        
-        // Save tge journal to a file, ask the user for a filename to save the journal to, and then save the journal to that file.
-
-
-
-        // Load the journal from a file, ask the user for a filename to load the journal from, and then load the journal from that file and display the entries on the console.
-
-
-
-        // Create a menu that allows the user to choose to create a new journal entry, display the journal entries, save the journal to a file, load the journal from a file, or quit the program.
-
-
-
-        // The list must contain at least 5 prompts, and the user should be able to choose a random prompt from the list when creating a new journal entry.
-
-
-
-        // The interface should follow the example in
-
    
     }
 }

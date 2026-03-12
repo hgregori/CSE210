@@ -22,10 +22,11 @@ class Prompt
 class Responses
 {
 
+    
     private static readonly List<string> _responseList = new List<string>();
 
     public void AddResponse(string response)
-    {   
+    {
         if (!string.IsNullOrWhiteSpace(response))
         {
             _responseList.Add(response);
@@ -35,5 +36,14 @@ class Responses
     public static List<string> GetResponses()
     {
         return new List<string>(_responseList);
+    }
+
+    public static void LoadResponses(List<string> entries)
+    {
+        _responseList.Clear();
+        if (entries != null)
+        {
+            _responseList.AddRange(entries);
+        }
     }
 }
