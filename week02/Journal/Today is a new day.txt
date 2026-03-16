@@ -1,2 +1,1 @@
-﻿Date: 16/03/2026 - Prompt: Describe a challenge you faced today and how you overcame it. What did you learn from the experience?
-- Response: C# is Tought, sometimes I really do not understand, Everything is going so quick that it is hard to keep up with the pase
+﻿
