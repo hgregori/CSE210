@@ -5,7 +5,7 @@ using System.Text;
 
 public static class StorageService
 {
-    // Uses a custom separator line of "\n|\n" to separate entries
+    // Uses a custom separator line of "\n|\n" to separate entries.
     public static void SaveTxtWithPipeSeparator(string filePath, List<string> entries)
     {
         if (string.IsNullOrWhiteSpace(filePath))
