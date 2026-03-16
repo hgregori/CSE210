@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-class Saving
+public static class StorageService
 {
+    // Uses a custom separator line of "\n|\n" to separate entries.
     public static void SaveTxtWithPipeSeparator(string filePath, List<string> entries)
     {
         if (string.IsNullOrWhiteSpace(filePath))
@@ -13,12 +14,16 @@ class Saving
             return;
         }
 
+        {
+            filePath = Path.ChangeExtension(filePath, ".txt");
+        }
         try
         {
             if (string.IsNullOrWhiteSpace(Path.GetExtension(filePath)))
             {
                 filePath = Path.ChangeExtension(filePath, ".txt");
             }
+
             string NormalizeNewlines(string s) =>
                 (s ?? string.Empty).Replace("\r\n", "\n").Replace("\r", "\n");
 
@@ -38,10 +43,7 @@ class Saving
             Console.WriteLine($"\n❌ Error saving file: {ex.Message}");
         }
     }
-}
 
-class Loading
-{
     public static List<string> LoadTxtWithPipeSeparator(string filePath)
     {
         var loaded = new List<string>();
@@ -62,13 +64,14 @@ class Loading
         {
             string all = File.ReadAllText(filePath, Encoding.UTF8);
 
-            // Normalize line endings
             all = all.Replace("\r\n", "\n").Replace("\r", "\n");
-
             all = all.Trim('\n');
 
             if (string.IsNullOrEmpty(all))
+            {
+                Console.WriteLine($"\n✅ Loaded 0 entries from '{filePath}'.");
                 return loaded;
+            }
 
             string[] parts = all.Split(new[] { "\n|\n" }, StringSplitOptions.None);
 
