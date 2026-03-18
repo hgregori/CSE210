@@ -1,55 +1,50 @@
 class Reference
 {
     private string _book;
-    private int _chapter; 
-    private int _Verse;  
+    private int _chapter;
+    private int _verse;
     private int _endVerse;
-    
+
     public Reference(string book, int chapter, int verse)
     {
         _book = book;
         _chapter = chapter;
-        _Verse = verse;
+        _verse = verse;
         _endVerse = verse;
-    }   
+    }
 
-    public Reference(string book, int chapter, int verse, int endVerse)
+    public Reference(string book, int chapter, int startVerse, int endVerse)
     {
         _book = book;
         _chapter = chapter;
-        _Verse = verse;
+        _verse = startVerse;
         _endVerse = endVerse;
     }
 
     public string GetDisplayText()
     {
-        return _endVerse > _Verse ? $"{_book} {_chapter}:{_Verse}-{_endVerse}" : $"{_book} {_chapter}:{_Verse}";
+        if (_verse == _endVerse)
+            return $"{_book} {_chapter}:{_verse}";
+
+        return $"{_book} {_chapter}:{_verse}-{_endVerse}";
     }
+
     public static Reference FromString(string input)
-    {    
-    // Example input: "John 3:4-5"
+    {
+        int lastSpace = input.LastIndexOf(" ");
+        string book = input.Substring(0, lastSpace);
 
-    // 1. Split book name from chapter/verse
-        int lastSpaceIndex = input.LastIndexOf(' ');
-        string book = input.Substring(0, lastSpaceIndex);
-        string chapterAndVerses = input.Substring(lastSpaceIndex + 1);
-        
-        // 2. Split chapter from verse(s)
-        var chapterAndRest = chapterAndVerses.Split(':');
-        int chapter = int.Parse(chapterAndRest[0]);
+        string chapterAndVerses = input.Substring(lastSpace + 1);
+        string[] parts = chapterAndVerses.Split(":");
 
-        // 3. Determine if there is a verse range
-        if (chapterAndRest[1].Contains('-'))
+        int chapter = int.Parse(parts[0]);
+
+        if (parts[1].Contains("-"))
         {
-            var parts = chapterAndRest[1].Split('-'); // "4-5"
-            int verse = int.Parse(parts[0]);
-            int endVerse = int.Parse(parts[1]);
-            return new Reference(book, chapter, verse, endVerse);
+            var range = parts[1].Split("-");
+            return new Reference(book, chapter, int.Parse(range[0]), int.Parse(range[1]));
         }
-        else
-        {
-            int verse = int.Parse(chapterAndRest[1]);
-            return new Reference(book, chapter, verse);
-        }
+
+        return new Reference(book, chapter, int.Parse(parts[1]));
     }
 }

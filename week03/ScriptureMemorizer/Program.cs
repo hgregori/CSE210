@@ -4,25 +4,35 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Welcome to the Scripture Memorizer!\n\nWhich scripture would you like to memorize?");
-        Console.WriteLine("Please first, What is the reference?");
-        string reference = Console.ReadLine();
-        Console.WriteLine("Please enter the scripture text:");
+        Console.WriteLine("Welcome to the Scripture Memorizer!\n");
+
+        Console.Write("What is the scripture reference? ");
+        string referenceInput = Console.ReadLine();
+
+        Console.Write("Enter the scripture text: ");
         string text = Console.ReadLine();
-        Scripture scripture = new Scripture(reference, new string[] { text });
+
+        Reference reference = Reference.FromString(referenceInput);
+        Scripture scripture = new Scripture(reference, text);
+
         Console.Clear();
+
+        string input;
         do
         {
             Console.WriteLine(scripture.GetDisplayText());
-            Console.WriteLine("\nPress Enter to hide a word, or type 'quit' to exit.");
-            string input = Console.ReadLine();
+            Console.WriteLine("\nPress Enter to hide a word or type 'quit' to exit.");
+            input = Console.ReadLine();
+
             if (input.ToLower() == "quit")
-            {
                 break;
-            } 
-            scripture.HideRandomWord(1);
+
+            scripture.HideRandomWords(1);
             Console.Clear();
-            scripture.GetDisplayText();
+
         } while (!scripture.IsCompletelyHidden());
+
+        Console.WriteLine(scripture.GetDisplayText());
+        Console.WriteLine("\nAll words hidden — program ending.");
     }
 }
