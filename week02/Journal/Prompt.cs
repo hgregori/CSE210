@@ -1,6 +1,6 @@
 using System;
 
-public class PromptService
+public class Prompt
 {
     private static readonly string[] _promptList =
     {

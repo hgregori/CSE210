@@ -35,7 +35,7 @@ class Program
     static void Main(string[] args)
     {
         var journal = new Journal();
-        var prompts = new PromptService();
+        var prompts = new Prompt();
 
         int choice = 0;
         do
