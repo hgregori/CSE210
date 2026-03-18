@@ -77,7 +77,7 @@ class Program
                 case 3:
                 {
                     Console.Write("\nEnter a TXT file name to save (e.g., journal.txt or just 'journal'): ");
-                    string? fileName = Console.ReadLine()?.Trim();
+                    string fileName = Console.ReadLine()?.Trim();
 
                     if (string.IsNullOrWhiteSpace(fileName))
                     {
@@ -95,7 +95,7 @@ class Program
                 case 4:
                 {
                     Console.Write("\nEnter a TXT file name to load (e.g., journal.txt): ");
-                    string? fileName = Console.ReadLine()?.Trim();
+                    string fileName = Console.ReadLine()?.Trim();
 
                     if (string.IsNullOrWhiteSpace(fileName))
                     {

@@ -1,5 +1,2 @@
-﻿Date: 12/03/2026 - Prompt: What was the most memorable part of your day? How did it make you feel? What did you learn from it?
-- Response: I did not notice that I woke up
-|
-Date: 12/03/2026 - Prompt: Write about a moment of kindness you witnessed or experienced today. How did it impact you or others?
-- Response: Learning more about C#
+﻿Date: 18/03/2026 - Prompt: What are you grateful for today? List three things and explain why they are important to you.
+- Response: For being alive, have good people aroud me, knowing the gospel
