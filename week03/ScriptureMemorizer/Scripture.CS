@@ -1,14 +1,14 @@
 class Scripture
 {
     private string _reference;
-    private string[] _text;
+    private List<string> _text;
 
     public string Reference
     {
         get => _reference;
-        set => _reference = string.IsNullOrEmpty(value) ? _reference : value;
+        set => _reference = Reference.FromString(value)
     }
-    public string[] Text
+    public List<string> Text
     {
         get => _text;
         set => _text = value ?? _text;
@@ -17,7 +17,7 @@ class Scripture
     public Scripture(string reference, string[] text)
     {
         _reference = reference;
-        _text = text;
+        _text = text.ToList();
     }
 
     public void HideRandomWord(int numberToHide)
@@ -27,6 +27,7 @@ class Scripture
 
     public string GetDisplayText()
     {
+
         return $"{_reference}: {string.Join(" ", _text)}";
     }
 
@@ -34,4 +35,6 @@ class Scripture
     {
         return false;
     }
+
+    
 }
