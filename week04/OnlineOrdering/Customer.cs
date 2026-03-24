@@ -10,16 +10,13 @@ class Customer
         _name = name;
         _address = address;
     }
-
-    public decimal CalculateShippingCost()
+    
+    public string GetName() => _name;
+    public Address GetAddress() => _address;
+ 
+    public bool LivesInUSA()
     {
-        if (_address.IsInUSA())
-        {
-            return 5.00m; // Flat rate for USA
-        }
-        else
-        {
-            return 35.00m; // Flat rate for international
-        }
+        return _address.IsInUSA();
     }
+
 }
