@@ -36,3 +36,6 @@ class Program
         Console.WriteLine("\nAll words hidden — program ending.");
     }
 }
+
+
+
