@@ -1,88 +1,82 @@
 using System;
+using System.Collections.Generic;
 
-class Reflection
+class Reflection : BaseActivity
 {
-    public void DisplayWelcomeMessageReflection()
+    private List<string> _usedPrompts = new List<string>();
+    private List<string> _usedQuestions = new List<string>();
+
+    private string[] prompts = {
+        "Think of a time when you stood up for someone else.",
+        "Think of a time when you did something really difficult.",
+        "Think of a time when you helped someone in need.",
+        "Think of a time when you did something truly selfless."
+    };
+
+    private string[] questions = {
+        "Why was this experience meaningful to you?",
+        "Have you ever done anything like this before?",
+        "How did you get started?",
+        "How did you feel when it was complete?",
+        "What made this time different than other times when you were not as successful?",
+        "What did you learn from this experience?",
+        "What did you learn about yourself through this experience?",
+        "How can you keep this experience in mind in the future?"
+    };
+
+    public Reflection() : base("Reflection",
+        "This activity will help you reflect on times when you showed strength.\nIt helps build confidence and resilience.")
     {
-        Console.WriteLine("Welcome to the Mindfulness Project! This class will guide you through mindful reflection exercises.");
-        Console.WriteLine("This activity will help you reflect on times in your life when you have shown strength and resilience. This will help you recognize the power you have and how you can use it in other aspects of your life.");
     }
 
-    public string GetRandomPrompt()
+    private string GetUniquePrompt()
     {
-        string[] prompts = {
-            "Think of a time when you stood up for someone else.",
-            "Think of a time when you did something really difficult.",
-            "Think of a time when you helped someone in need.",
-            "Think of a time when you did something truly selfless."
-        };
+        if (_usedPrompts.Count == prompts.Length)
+            _usedPrompts.Clear();
 
-        Random random = new Random();
-        int index = random.Next(prompts.Length);
-        return prompts[index];
+        Random rnd = new Random();
+        string prompt;
+
+        do { prompt = prompts[rnd.Next(prompts.Length)]; }
+        while (_usedPrompts.Contains(prompt));
+
+        _usedPrompts.Add(prompt);
+        return prompt;
     }
 
-    public string GetRandomQuestion()
+    private string GetUniqueQuestion()
     {
-        string[] questions = {
-            "What did you learn from this experience?",
-            "How did this experience shape who you are today?",
-            "What strengths did you use during this experience?",
-            "How can you apply what you learned from this experience to other areas of your life?",
-            "What did you learn about yourself through this experience?",
-            "How can you keep this experience in mind in the future?"
-        };
+        if (_usedQuestions.Count == questions.Length)
+            _usedQuestions.Clear();
 
-        Random random = new Random();
-        int index = random.Next(questions.Length);
-        return questions[index];
+        Random rnd = new Random();
+        string q;
+
+        do { q = questions[rnd.Next(questions.Length)]; }
+        while (_usedQuestions.Contains(q));
+
+        _usedQuestions.Add(q);
+        return q;
     }
 
-    public int GetReflectionDuration()
+    public void StartReflectionActivity()
     {
-        Console.Write("\nHow long in seconds would you like to do this activity? ");
-        int duration = int.Parse(Console.ReadLine());
-        return duration;
-    }
-    public void ShowSpinner(int seconds)
-{
-    char[] spinner = { '|', '/', '-', '\\' };
-    int index = 0;
+        int duration = StartActivity();
 
-    DateTime endTime = DateTime.Now.AddSeconds(seconds);
-
-    while (DateTime.Now < endTime)
-    {
-        Console.Write(spinner[index]);
-        Thread.Sleep(1000); 
-        Console.Write("\b \b"); 
-
-        index = (index + 1) % spinner.Length;
-    }
-}
-
-public void StartReflectionActivity(int duration)
-{
-    string prompt = GetRandomPrompt();
-    Console.WriteLine($"\nYour prompt is: {prompt}");
-    Console.WriteLine("\nTake a moment to reflect on this prompt and think about your answer.");
-
-    // Spinner during initial reflection time
-    ShowSpinner(10);
-
-    DateTime startTime = DateTime.Now;
-    DateTime endTime = startTime.AddSeconds(duration);
-
-    while (DateTime.Now < endTime)
-    {
-        string question = GetRandomQuestion();
-        Console.WriteLine($"\nNow, consider the following question: {question}");
-        Console.WriteLine("Take a moment to reflect on this question and think about your answer.");
+        string prompt = GetUniquePrompt();
+        Console.WriteLine($"\nPrompt: {prompt}");
+        Console.WriteLine("Take a moment to reflect...");
         ShowSpinner(10);
+
+        DateTime endTime = DateTime.Now.AddSeconds(duration);
+
+        while (DateTime.Now < endTime)
+        {
+            string q = GetUniqueQuestion();
+            Console.WriteLine($"\nQuestion: {q}");
+            ShowSpinner(10);
+        }
+
+        EndActivity(duration);
     }
-
-    Console.WriteLine("\nReflection activity completed!");
-    ShowSpinner(2);
-}
-
 }
