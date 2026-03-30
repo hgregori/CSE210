@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Threading;
 
 class Breathing
@@ -11,40 +12,46 @@ class Breathing
 
     public int GetBreathingDuration()
     {
-        Console.Write("How long would you like to do this activity? ");
+        Console.Write("\nHow long in seconds would you like to do this activity? ");
         int duration = int.Parse(Console.ReadLine());
         return duration;
     }
 
-    public void StartBreathingActivity(int duration)
+    public void ShowSpinner(int seconds)
+{
+    char[] spinner = { '|', '/', '-', '\\' };
+    int index = 0;
+
+    DateTime endTime = DateTime.Now.AddSeconds(seconds);
+
+    while (DateTime.Now < endTime)
     {
-        Console.WriteLine("Get ready to start the breathing activity...");
-        Thread.Sleep(5000); // Pause for 5 seconds before starting
+        Console.Write(spinner[index]);
+        Thread.Sleep(1000); // Controls speed of animation
+        Console.Write("\b"); // Erase previous character
 
-        for (int i = 0; i < duration; i++)
-        {
-            Console.WriteLine("Breathe in...");
-            Thread.Sleep(5000); // Breathe in for 5 seconds
-            // Console.Write("|");
-            // for (int j = 0; j < 5; j++)
-            // {
-            //     Console.Write("|");
-            //     Thread.Sleep(500); // Pause for 0.5 seconds between each | character
-            //     Console.Write("\b \b"); // Erase the | character
-            //     Console.Write("/");
-            //     Thread.Sleep(500);
-            //     Console.Write("\b \b"); // Erase the | character
-            //     Console.Write("-");
-            //     Thread.Sleep(500);
-            //     Console.Write("\b \b"); // Erase the | character
-            //     Console.Write("\");
-            // }
-            
-            Console.WriteLine("Breathe out...");
-            Thread.Sleep(5000); // Breathe out for 5 seconds
-        }
-
-        Console.WriteLine("Great job! You've completed the breathing activity.");
-        Thread.Sleep(2000); // Pause for 2 seconds before ending the activity
+        index = (index + 1) % spinner.Length;
     }
+}
+  public void StartBreathingActivity(int duration)
+{
+    Console.WriteLine("Get ready to start the breathing activity...");
+    ShowSpinner(5); 
+
+    DateTime startTime = DateTime.Now;
+    DateTime endTime = startTime.AddSeconds(duration);
+
+    while (DateTime.Now < endTime)
+    {
+        Console.WriteLine("Breathe in...");
+        ShowSpinner(5); 
+
+        Console.WriteLine("Breathe out...");
+        ShowSpinner(5);
+    }
+
+    Console.WriteLine("Great job! You've completed the breathing activity.");
+    ShowSpinner(2);
+    Console.Clear();
+}
 }

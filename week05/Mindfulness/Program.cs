@@ -12,6 +12,7 @@ class Program
         do
         {
             choice = DisplayMenu();
+            Console.Clear();
             switch (choice)
             {
                 case 1:
@@ -23,14 +24,14 @@ class Program
                 case 2:
                     Listening listeningActivity = new Listening();
                     listeningActivity.DisplayWelcomeMessageListening();
-                    string prompt = listeningActivity.GetARandomPrompt();
-                    Console.WriteLine($"\nYour prompt is: {prompt}");
-                    Console.WriteLine("Take a moment to reflect on this prompt and think about your answer.");
+                    int listeningDuration = listeningActivity.GetListeningDuration();
+                    listeningActivity.StartListeningActivity(listeningDuration);
                     break;
                 case 3:
                     Reflection reflectionActivity = new Reflection();
                     reflectionActivity.DisplayWelcomeMessageReflection();
-                    Console.WriteLine("\nTake a moment to reflect on a time in your life when you showed strength and resilience. Think about how you overcame challenges and what you learned from that experience.");
+                    int reflectionDuration = reflectionActivity.GetReflectionDuration();
+                    reflectionActivity.StartReflectionActivity(reflectionDuration);
                     break;
                 case 4:
                     Console.WriteLine("Thank you for participating in the Mindfulness Project! Remember to take time for yourself and practice mindfulness regularly. Have a great day!");
