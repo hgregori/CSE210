@@ -21,12 +21,12 @@ class SimpleGoal : Goal
 
     public override string GetDetailString()
     {
-        return $"Goal: {GetGoalName()}\nDescription: {GetGoalDescription()}\nPoints: {GetGoalPoints()}\nStatus: {( _IsComplete ? "Completed" : "Not Completed" )}";
+        return $"Goal: {GetGoalName()}\nDescription: {GetGoalDescription()}\nPoints: {GetPoints()}\nStatus: {( _IsComplete ? "Completed" : "Not Completed" )}";
     }
 
     public override string GetStringRepresentation()
     {
-        return $"SimpleGoal|{GetGoalName()}|{GetGoalDescription()}|{GetGoalPoints()}|{_IsComplete}";
+        return $"SimpleGoal|{GetGoalName()}|{GetGoalDescription()}|{GetPoints()}|{_IsComplete}";
     }
 
 }

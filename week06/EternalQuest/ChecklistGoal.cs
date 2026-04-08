@@ -1,38 +1,50 @@
-using System;
-
 class ChecklistGoal : Goal
 {
-    private int _TimesCompleted;
-    private int _TimesToComplete;
-    private int _BonusPoints;
+    private int _timesCompleted;
+    private int _timesToComplete;
+    private int _bonusPoints;
 
-    public ChecklistGoal(string goalName, string goalDescription, int goalPoints, int timesToComplete, int bonusPoints = 0) : base(goalName, goalDescription, goalPoints)
+    public ChecklistGoal(string name, string desc, int points, int target, int bonus)
+        : base(name, desc, points)
     {
-        _TimesCompleted = 0;
-        _TimesToComplete = timesToComplete;
-        _BonusPoints = bonusPoints;
+        _timesToComplete = target;
+        _bonusPoints = bonus;
     }
 
     public override void RecordEvent()
     {
-        if (_TimesCompleted < _TimesToComplete)
+        if (_timesCompleted < _timesToComplete)
         {
-            _TimesCompleted++;
+            _timesCompleted++;
         }
-    }   
+    }
 
     public override bool IsComplete()
     {
-        return _TimesCompleted >= _TimesToComplete;
+        return _timesCompleted >= _timesToComplete;
     }
 
+    public override int GetPoints()
+    {
+        if (_timesCompleted == _timesToComplete)
+        {
+            return _goalPoints + _bonusPoints;
+        }
+
+        return _goalPoints;
+    }
     public override string GetDetailString()
     {
-        return $"Goal: {GetGoalName()}\nDescription: {GetGoalDescription()}\nPoints: {GetGoalPoints()}\nStatus: {_TimesCompleted}/{_TimesToComplete} completed\nBonus Points: {_BonusPoints}";
+    return $"Goal: {GetGoalName()}\n" +
+           $"Description: {GetGoalDescription()}\n" +
+           $"Points per completion: {GetPoints()}\n" +
+           $"Status: {_timesCompleted}/{_timesToComplete} completed\n" +
+           $"Bonus Points: {_bonusPoints}";
     }
+
 
     public override string GetStringRepresentation()
     {
-        return $"ChecklistGoal|{GetGoalName()}|{GetGoalDescription()}|{GetGoalPoints()}|{_TimesCompleted}|{_TimesToComplete}|{_BonusPoints}";
+        return $"ChecklistGoal|{GetGoalName()}|{GetGoalDescription()}|{GetPoints()}|{_timesCompleted}|{_timesToComplete}|{_bonusPoints}";
     }
 }

@@ -1,40 +1,31 @@
-using System;
-using System.Reflection.Metadata;
-using System.Security.Cryptography.X509Certificates;
-
 public abstract class Goal
 {
-    private string _GoalName;
-    private string _GoalDescription;
-    private int _GoalPoints;
+    private string _goalName;
+    private string _goalDescription;
+    protected int _goalPoints;
 
-    public Goal(string goalName, string goalDescription, int goalPoints)
+    protected Goal(string name, string description, int points)
     {
-        _GoalName = goalName;
-        _GoalDescription = goalDescription;
-        _GoalPoints = goalPoints;
+        _goalName = name;
+        _goalDescription = description;
+        _goalPoints = points;
     }
 
-    public string GetGoalName()
+    public string GetGoalName() => _goalName;
+
+    public abstract void RecordEvent();
+    public abstract bool IsComplete();
+    public abstract string GetDetailString();
+    public abstract string GetStringRepresentation();
+    // ✅ virtual — NOT abstract
+    public virtual int GetPoints()
     {
-        return _GoalName;
-    }
+        return _goalPoints;
+    }   
 
     public string GetGoalDescription()
     {
-        return _GoalDescription;
+        return _goalDescription;
     }
 
-    public int GetGoalPoints()
-    {
-        return _GoalPoints;
-    }
-
-    public abstract void RecordEvent();
-    
-    public abstract bool IsComplete();
-
-    public abstract string GetDetailString();
-
-    public abstract string GetStringRepresentation();
 }

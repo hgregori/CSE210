@@ -69,7 +69,15 @@ class GoalManager
     {
         return _TotalPoints;
     }
+    public void AddPoints(int points)
+    {
+        _TotalPoints += points;
+    }
 
+    public void DisplayPlayerInfo()
+    {
+        Console.WriteLine($"Player Total Points: {_TotalPoints}");
+    }
     public void ListGoalNames()
     {
         
@@ -77,8 +85,13 @@ class GoalManager
 
     public void ListGoalDetails()
     {
-        
+    for (int i = 0; i < _Goals.Count; i++)
+    {
+        string status = _Goals[i].IsComplete() ? "[X]" : "[ ]";
+        Console.WriteLine($"{status} {_Goals[i].GetDetailString()}");
     }
+    }
+
 
     public void CreateGoal()
     {
@@ -123,33 +136,23 @@ class GoalManager
         }
     }
 
-    public void RecordEvent()
+   public void RecordEvent()
+{
+    Console.WriteLine("Choose a goal:");
+    for (int i = 0; i < _Goals.Count; i++)
     {
-        Console.WriteLine("\nSelect a goal to record an event:");
-        for (int i = 0; i < _Goals.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {_Goals[i].GetGoalName()}");
-        }
-        Console.Write("Enter the number of the goal: ");
-        int choice = int.Parse(Console.ReadLine()) - 1;
+        Console.WriteLine($"{i + 1}. {_Goals[i].GetGoalName()}");
+    }
 
-        if (choice >= 0 && choice < _Goals.Count)
-        {
-            _Goals[choice].RecordEvent();
-            if (_Goals[choice].IsComplete())
-            {
-                _TotalPoints += _Goals[choice].GetGoalPoints();
-                Console.WriteLine($"Congratulations! You've earned {_Goals[choice].GetGoalPoints()} points. Total points: {_TotalPoints}");
-            }
-            else
-            {
-                Console.WriteLine("Event recorded, but the goal is not yet complete.");
-            }
-        }
-        else
-        {
-            Console.WriteLine("Invalid choice. No event recorded.");
-        }
+    int index = int.Parse(Console.ReadLine()) - 1;
+
+    Goal goal = _Goals[index];
+    goal.RecordEvent();
+
+    int earned = goal.GetPoints();
+    _TotalPoints += earned;
+
+    Console.WriteLine($"You earned {earned} points!");
     }
 
     public void SaveGoals()
@@ -171,12 +174,18 @@ class GoalManager
         Console.WriteLine("\nEnter the file path to load goals:");
 
         string filePath = Console.ReadLine();
+        if (File.ReadAllLines(filePath).Length == 0)
+        {
+            Console.WriteLine("The file is empty. No goals loaded.");
+            return;
+        }
+
         string[] lines = File.ReadAllLines(filePath);
 
         _TotalPoints = int.Parse(lines[0]); // Load total points from the first line of the file
-        foreach (string line in lines)
+        for (int i = 1; i < lines.Length; i++)
         {
-            string[] parts = line.Split('|');
+            string[] parts = lines[i].Split('|');
             string goalType = parts[0];
             string name = parts[1];
             string description = parts[2];
@@ -202,7 +211,7 @@ class GoalManager
                 int timesToComplete = int.Parse(parts[5]);
                 int bonusPoints = int.Parse(parts[6]);
                 ChecklistGoal checklistGoal = new ChecklistGoal(name, description, points, timesToComplete, bonusPoints);
-                for (int i = 0; i < timesCompleted; i++)
+                for (int j = 0; j < timesCompleted; j++)
                 {
                     checklistGoal.RecordEvent();
                 }
