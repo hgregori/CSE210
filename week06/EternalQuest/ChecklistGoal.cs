@@ -6,7 +6,7 @@ class ChecklistGoal : Goal
     private int _TimesToComplete;
     private int _BonusPoints;
 
-    public ChecklistGoal(string goalName, string goalDescription, int goalPoints, int timesToComplete, int bonusPoints) : base(goalName, goalDescription, goalPoints)
+    public ChecklistGoal(string goalName, string goalDescription, int goalPoints, int timesToComplete, int bonusPoints = 0) : base(goalName, goalDescription, goalPoints)
     {
         _TimesCompleted = 0;
         _TimesToComplete = timesToComplete;
