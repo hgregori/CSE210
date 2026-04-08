@@ -39,7 +39,7 @@ class ChecklistGoal : Goal
            $"Description: {GetGoalDescription()}\n" +
            $"Points per completion: {GetPoints()}\n" +
            $"Status: {_timesCompleted}/{_timesToComplete} completed\n" +
-           $"Bonus Points: {_bonusPoints}";
+           $"Bonus Points: {_bonusPoints}\n";
     }
 
 

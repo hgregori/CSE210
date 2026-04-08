@@ -18,7 +18,7 @@ class EternalGoal : Goal
 
     public override string GetDetailString()
     {
-        return $"Goal: {GetGoalName()}\nDescription: {GetGoalDescription()}\nPoints: {GetPoints()}\nStatus: Eternal (never completed)";
+        return $"Goal: {GetGoalName()}\nDescription: {GetGoalDescription()}\nPoints: {GetPoints()}\nStatus: Eternal (never completed)\n";
     }
 
     public override string GetStringRepresentation()

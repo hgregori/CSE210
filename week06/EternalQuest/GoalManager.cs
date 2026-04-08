@@ -103,6 +103,12 @@ class GoalManager
         Console.Write("\nEnter your choice: "); 
         int choice = int.Parse(Console.ReadLine());
 
+        if (choice < 1 || choice > 4)
+        {
+            Console.WriteLine("Invalid choice. Please select a valid goal type.");
+            return;
+        }
+
         Console.Write("Enter goal name: ");
         string name = Console.ReadLine();
         Console.Write("Enter goal description: ");
@@ -125,10 +131,6 @@ class GoalManager
             Console.Write("Enter bonus points for completing the checklist: ");
             int bonusPoints = int.Parse(Console.ReadLine());
             AddGoal(new ChecklistGoal(name, description, points, targetCount, bonusPoints));
-        }
-        else if (choice == 4)
-        {
-            // Do nothing, return to main menu
         }
         else
         {
