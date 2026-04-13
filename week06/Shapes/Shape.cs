@@ -1,6 +1,6 @@
 using System;
 
-public class Shape
+public  class Shape
 {
     private string _color;
 
